@@ -1,4 +1,9 @@
-# Open source and open development proteomics software 
+This repository contains the material for my keynote talk at
+the [EuBIC 2018 meeting](http://uahost.uantwerpen.be/eubic18/).
+
+## Open source and open development proteomics software 
+
+### Abstract
 
 Developing good scientific is difficult in many ways, considering that
 it often relies on diverse skills (such as programming and scientific)
@@ -13,4 +18,14 @@ how some of these software packages evolved over time, greatly
 benefited from external contributions, and how they fit into a broader
 software ecosystem.
 
+
+### Licence
+
+All material is available under a creative common
+[CC-BY license](http://creativecommons.org/licenses/by/4.0/). You are
+free to share (copy and redistribute the material in any medium or
+format) and adapt (remix, transform, and build upon the material) for
+any purpose, even commercially.
+
+![CC-BY](./Figures/cc1.jpg)
 
