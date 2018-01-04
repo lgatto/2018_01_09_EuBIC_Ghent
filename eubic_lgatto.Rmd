@@ -47,27 +47,69 @@ ecosystem**.
 
 
 ---
+class: inverse, middle, center
+
 # Bioconductor software
 
+---
+
+- What is available in Bioconductor
+- My packages
+- Software dependencies
 
 ---
+class: inverse, middle, center
 # Data structures
 
+---
+
+- `[OnDisk]MSnExp`
+- `MSnSet`
 
 ---
+class: inverse, middle, center
 # Scientific software
 
 ---
+
+- Unit testing
+- Documentations
+- The costs of maintenance
+
+---
+class: inverse, middle, center
 # Over time
 
 ---
+
+- MSnbase (see later)
+- mzR
+- pRoloc
+
+---
+class: inverse, middle, center
 # `MSnbase` contributions
+
+---
+class: middle, center
+
+![MSnbase contributions](./figure/msnbase-github-commits.png)
+
+---
+class: middle, center
+
+![MSnbase contributions](./figure/msnbase-contribs.png)
+
+.left[See also [this blog post](https://lgatto.github.io/msnbase-contribs/).]
 
 
 ---
+class: inverse, middle, center
 # Broder ecosystem
 
+---
 
+MS-based proteomics and metabolomics
 
 ---
 class: middle
