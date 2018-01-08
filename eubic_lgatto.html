@@ -77,9 +77,7 @@ year,
 [1476 software](https://bioconductor.org/packages/release/BiocViews.html#___Software) (908
 annotation and 325 experiment) packages, and an active user community.
 
-
----
-class: middle 
+--
 
 Open source, and **coordinated open development**, enabling
 **reproducible research** enables understanding of the data (not a
@@ -91,8 +89,7 @@ black box) and **drive scientific innovation**.
 - Common testing infrastructure
 - Open package technical peer review
 
----
-class: middle 
+--
 
 Since 2010 - 2011, there has been a considerable increase in the
 number and usage of mass spectrometry and proteomics software in
@@ -235,8 +232,10 @@ class: middle, center, inverse
 ---
 class: middle
 
-An essential aspect that is central to Bioconductor and its success is
-the availability of core data infrastructure that is used across
+## Data infrastructure
+
+An essential aspect to Bioconductor and its success is the
+availability of core data infrastructure that is used across
 packages. Package developers are advised to make use of existing
 infrastructure to provide coherence, interoperability and stability to
 the project as a whole.
@@ -254,7 +253,7 @@ class: middle
 - SAM / BAM – *[Rsamtools](http://bioconductor.org/packages/Rsamtools)*`::scanBam()`, *[GenomicAlignments](http://bioconductor.org/packages/GenomicAlignments)*`:readGAlignment*()`
 - FASTA – *[Biostrings](http://bioconductor.org/packages/Biostrings)*`::readDNAStringSet()`
 - FASTQ – *[ShortRead](http://bioconductor.org/packages/ShortRead)*`::readFastq()`
-- Mass spectrometry data (XML-based and mfg formats) – *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::readMSData()`, *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::readMgfData()`
+- Mass spectrometry data (XML-based and mfg formats) – *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::readMSData()` (see later), *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::readMgfData()`
 
 ---
 class: middle
@@ -268,6 +267,7 @@ class: middle
 - Multi-omics data – *[MultiAssayExperiment](http://bioconductor.org/packages/MultiAssayExperiment)*`::MultiAssayExperiment()`
 - Single cell data – *[SingleCellExperiment](http://bioconductor.org/packages/SingleCellExperiment)*`::SingleCellExperiment()`
 - Mass spectrometry data – *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::MSnExp()` (see later)
+- Quantitative proteomics data – *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::MSnSet()` (see later)
 
 ---
 class: middle, center
@@ -322,11 +322,72 @@ count: false
 
 # Scientific software
 
+### Documentations
+### Testing
+
+
 ---
 
-- Unit testing
-- Documentations and reproducible research
-- The costs of maintenance
+## Documentations
+
+
+```r
+&gt; ?readMSData
+&gt; vignette(package = "MSnbase")
+Vignettes in package ‘MSnbase’:
+
+MSnbase-development     A short introduction to `MSnbase` development
+                        (source, html)
+MSnbase-demo            Base Functions and Classes for MS-based
+                        Proteomics (source, html)
+benchmarking            MSnbase2 benchmarking (source, html)
+MSnbase-io              MSnbase IO capabilities (source, html)
+```
+
+Example at https://lgatto.github.io/MSnbase/
+
+---
+
+## Unit and integration testing
+
+```
+MSnbase
+├── DESCRIPTION
+├── NAMESPACE
+├── NEWS
+├── data
+├── inst
+│   ├── extdata
+│   └── scripts
+├── man
+├── R
+├── src
+├── tests
+│   └── testthat
+└── vignettes
+```
+
+
+---
+class: middle, center
+
+![testing 1](./Figures/test1.png)
+
+
+---
+class: middle, center
+
+![testing 2](./Figures/test2.png)
+
+
+---
+
+## Code coverage
+
+
+---
+
+## The costs of maintenance
 
 
 ---
