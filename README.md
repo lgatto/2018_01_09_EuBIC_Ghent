@@ -20,7 +20,9 @@ software ecosystem.
 
 Slides are available [here](https://rawgit.com/lgatto/2018_01_09_EuBIC_Ghent/master/eubic_lgatto.html).
 
-![First slide](./Figures/screenshot.png)
+
+[![First slide](./Figures/screenshot.png)](https://rawgit.com/lgatto/2018_01_09_EuBIC_Ghent/master/eubic_lgatto.html).
+
 
 ### Licence
 
