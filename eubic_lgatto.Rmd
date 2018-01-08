@@ -195,8 +195,8 @@ count: false
 # Use cases
 
 ### Dependencies
-### Applications
 ### Data structures
+### Applications
 
 ---
 class: middle, center
@@ -230,44 +230,10 @@ class: middle, center
 
 Explain what these different packages do.
 
----
-class: middle, center, inverse
-
-## Applications (1)
-
-### Spatial proteomics
-
----
-class: middle
-
-See *A Bioconductor workflow for processing and analysing spatial
-proteomics data*
-([doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/))
-for details.
-
-
-.left-col[
-```{r spatprot, eval=FALSE}
-library("pRoloc")
-library("pRolocdata")
-data(hyperLOPIT2015)
-plot2D(hyperLOPIT2015)
-```
-]
-
-.right-col[
-<img src="./Figures/hl.png" />
-]
-
-
-
----
-class: middle, center
-
-![](./Figures/protmspkgsdep.png)
 
 ---
 class: middle, center, inverse
+count: false
 
 ## Data infrastructure
 
@@ -345,6 +311,42 @@ readMSData(f, mode = "onDisk")
 
 ---
 class: middle, center, inverse
+count: false
+
+## Applications (1)
+
+### Spatial proteomics
+
+---
+class: middle
+
+See *A Bioconductor workflow for processing and analysing spatial
+proteomics data*
+([doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/))
+for details.
+
+
+.left-col-40[
+```{r spatprot, eval=FALSE}
+library("pRoloc")
+library("pRolocdata")
+data(hyperLOPIT2015)
+plot2D(hyperLOPIT2015)
+```
+]
+
+.right-col-60[
+<img src="./Figures/hl.png" />
+]
+
+---
+class: middle, center
+
+![](./Figures/protmspkgsdep.png)
+
+---
+class: middle, center, inverse
+count: false
 
 ## Applications (2)
 
@@ -428,9 +430,28 @@ class: middle, center
 
 
 ---
+class: middle, center
 
 ## The costs of maintenance
 
+<a href="https://lgatto.github.io/my-r-packages/"><img width="80%" src="./Figures/my-r-packages.png" alt="my R packages"></a>
+
+
+---
+class: middle
+
+## The costs of maintenance
+
+- Software decay
+- Side effect of dependencies
+- Testing helps to maintain working code
+- Sometimes, less is more
+- Deprecation vs. long term maintenace (and funding!)
+
+---
+class: middle, center
+
+<a href="https://twitter.com/ChrisFiloG/status/950412667013009408"><img width="80%" src="./Figures/2-types-sw.png" alt="2 types of software"></a>
 
 ---
 class: inverse, middle, center
@@ -466,7 +487,7 @@ class: middle
 class: middle
 name: laurent-gatto
 
-.left-col[
+.left-col-50[
 <img src="./img/lgatto3b.png" width = "180px"/>
 ### Laurent Gatto
 <i class="fas fa-flask"></i>&nbsp;[Computational Proteomics Unit](https://lgatto.github.io/cpu-lab/)<br />
@@ -483,10 +504,10 @@ name: laurent-gatto
 <!-- <i class="fab fa-linkedin"></i>&nbsp;https://www.linkedin.com/in/lgatto/<br /> -->
 ]
 
-.rigth-col[
+.rigth-col-50[
 
 ## Thank you for your attention
 
-### Find the slides at [http://bit.ly/20180109eubic](https://rawgit.com/lgatto/slide-templates/master/my_template.html).
+### Find the slides at [http://bit.ly/20180109eubic](https://rawgit.com/lgatto/slide-templates/master/my_template.html)
 ]
 
