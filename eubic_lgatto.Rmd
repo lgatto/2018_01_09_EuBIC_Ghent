@@ -15,8 +15,16 @@ class: middle
 name: cc-by
 
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE}
 options(htmltools.dir.version = FALSE)
+library("BiocStyle")
+library("ggplot2")
+library("magrittr")
+library("dplyr")
+library("knitr")
+library("lubridate")
+library("gridExtra")
+load("./data/downloads.rda")
 ```
 
 These slides are available under a **creative common
@@ -48,46 +56,315 @@ ecosystem**.
 
 ---
 class: inverse, middle, center
+count: false
 
 # Bioconductor software
 
----
+???
 
 - What is available in Bioconductor
 - My packages
 - Software dependencies
 
+
+---
+class: middle 
+
+[Bioconductor](https://bioconductor.org/) (Release 3.6) provides tools
+for the analysis and comprehension of high-throughput genomic
+data. Bioconductor uses
+the [R statistical programming language](https://www.r-project.org/),
+and is open source and open development. It has two releases each
+year,
+[1476 software](https://bioconductor.org/packages/release/BiocViews.html#___Software) (908
+annotation and 325 experiment) packages, and an active user community.
+
+
+---
+class: middle 
+
+Open source, and **coordinated open development**, enabling
+**reproducible research** enables understanding of the data (not a
+black box) and **drive scientific innovation**.
+
+- Bioconductor core team (lead by Dr. Martin Morgan)
+- Common infrastructure
+- Common documentation standards
+- Common testing infrastructure
+- Open package technical peer review
+
+---
+class: middle 
+
+Since 2010 - 2011, there has been a considerable increase in the
+number and usage of mass spectrometry and proteomics software in
+Bioconductor (see the [Proteomics packages in
+Bioconductor](https://lgatto.github.io/RforProteomics/articles/biocprot.html)
+for details.)
+
+---
+class: middle, center
+
+```{r nbpkgs, echo=FALSE}
+nbp <- pyearly %>% group_by(Year) %>% count()
+ggplot(nbp, aes(x = Year, y = n, group = 1)) +
+    geom_line() + geom_point() +
+    ylab("Number of packages")
+```
+
+???
+
+These are data for version 3.7, the current devel version.
+
+In 2011 and in the years thereafter, the Bioconductor project has
+accepted a growing number of proteomics packages. Since 2009, there
+were 14, 15, 22, 32, 52, 69, 82, 89, 97 and 96 packages, corresponding
+to 1, 7, 10, 20, 17, 13, 7, 8 and -1 new packages per year.
+
+---
+class: middle, center
+
+```{r nnbdown, echo=FALSE}
+mzrsel <- pyearly$package == "mzR"
+pyearly[mzrsel & pyearly$Year == 2013, "Nb_of_distinct_IPs"] <- 5000
+pyearly[mzrsel & pyearly$Year == 2014, "Nb_of_distinct_IPs"] <- 7500
+alldwn <- pyearly %>%
+    filter(Year < as.numeric(format(Sys.time(),"%Y"))) %>%
+    group_by(Year) %>%
+    summarise(Downloads = sum(Nb_of_distinct_IPs))
+ggplot(alldwn, aes(x = Year, y = Downloads)) +
+    geom_point() + geom_line() +
+    ylab("Total number of downloads (distinct IPs)")    
+```
+
+
+---
+class: middle, center
+
+```{r nbdownly, message=FALSE, echo=FALSE}
+ggplot(pyearly, aes(x = Date, y = Nb_of_distinct_IPs, group = package)) +
+    geom_point() + geom_line() +
+    ylab("Package downloads (distinct IPs)")
+    
+```
+
+???
+
+When looking at individual packages however, the trend seems to hold
+for most packages, which show a slight but consistent upwards trend.
+
+---
+class: middle, center
+
+```{r toppkgs, echo=FALSE}
+pyearly %>% filter(Year == 2017) %>%
+    select(Year, Nb_of_distinct_IPs, Nb_of_downloads, package) %>%
+    arrange(desc(Nb_of_distinct_IPs)) %>%
+    head %>% kable
+```
+
+---
+class: middle, center
+
+```{r, echo = FALSE, fig.width = 12}
+pkg <- "MSnbase"
+dwndata <- pmonthly
+x <- dwndata %>% filter(package == pkg)
+p1 <- ggplot(x, aes(x = Date, y = Nb_of_distinct_IPs)) +
+    geom_line(aes(colour = factor(Year))) +
+    ylab("MSnbase downloads (distinct IPs)") +
+    theme(legend.position="none")
+p2 <- ggplot(x, aes(x = month(Date),
+                    y = Nb_of_distinct_IPs,
+                    group = Year)) +
+    geom_line(aes(colour = factor(Year))) +
+    ylab("MSnbase downloads (distinct IPs)")    
+grid.arrange(p1, p2, ncol = 2)
+```
+
 ---
 class: inverse, middle, center
-# Data structures
+count: false
+
+# Use cases
+
+### Dependencies
+### Applications
+### Data structures
 
 ---
+class: middle, center
 
-- `[OnDisk]MSnExp`
-- `MSnSet`
+![](./Figures/g.png)
+
+
+???
+
+Dependency graph containing 41 MS and proteomics-tagged packages (out
+of 100+) and their dependencies. Showing all packages and deps would
+produce a big hairball.
+
+- Number of proteomics packages: 97
+- Number of mass spec packages: 66
+- 41 in common, coloured on the graph
+- 192 white nodes, non-MS/prot dependencies
+- My Bioc packages: 16, 8 on that graph
+
+
+- `mzR`: fast access to raw MS data in open formats
+- `MSnbase`: general infrastructure of MS and proteomics
+- `pRoloc`: spatial proteomics
+
+---
+class: middle, center
+
+![](./Figures/protmspkgsdep.png)
+
+???
+
+Explain what these different packages do.
+
+---
+class: middle, center, inverse
+
+## Applications (1)
+
+### Spatial proteomics
+
+---
+class: middle
+
+See *A Bioconductor workflow for processing and analysing spatial
+proteomics data*
+([doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/))
+for details.
+
+
+.left-col[
+```{r spatprot, eval=FALSE}
+library("pRoloc")
+library("pRolocdata")
+data(hyperLOPIT2015)
+plot2D(hyperLOPIT2015)
+```
+]
+
+.right-col[
+<img src="./Figures/hl.png" />
+]
+
+
+
+---
+class: middle, center
+
+![](./Figures/protmspkgsdep.png)
+
+---
+class: middle, center, inverse
+
+## Data infrastructure
+
+---
+class: middle
+
+An essential aspect that is central to Bioconductor and its success is
+the availability of core data infrastructure that is used across
+packages. Package developers are advised to make use of existing
+infrastructure to provide coherence, interoperability and stability to
+the project as a whole.
+
+Below are some core classes, taken from the
+[Common Bioconductor Methods and Classes](https://bioconductor.org/developers/how-to/commonMethodsAndClasses/) page.
+
+---
+class: middle
+
+#### Importing
+
+- GTF, GFF, BED, BigWig, etc., - `r Biocpkg("rtracklayer")``::import()`
+- VCF – `r Biocpkg("VariantAnnotation")``::readVcf()`
+- SAM / BAM – `r Biocpkg("Rsamtools")``::scanBam()`, `r Biocpkg("GenomicAlignments")``:readGAlignment*()`
+- FASTA – `r Biocpkg("Biostrings")``::readDNAStringSet()`
+- FASTQ – `r Biocpkg("ShortRead")``::readFastq()`
+- Mass spectrometry data (XML-based and mfg formats) – `r Biocpkg("MSnbase")``::readMSData()`, `r Biocpkg("MSnbase")``::readMgfData()`
+
+---
+class: middle
+
+#### Common Classes
+
+- Rectangular feature x sample data – `r Biocpkg("SummarizedExperiment")``::SummarizedExperiment()` (RNAseq count matrix, microarray, ...)
+- Genomic coordinates – `r Biocpkg("GenomicRanges")``::GRanges()` (1-based, closed interval)
+- DNA / RNA / AA sequences – `r Biocpkg("Biostrings")``::*StringSet()`
+- Gene sets – `r Biocpkg("GSEABase")``::GeneSet()` `r Biocpkg("GSEABase")``::GeneSetCollection()`
+- Multi-omics data – `r Biocpkg("MultiAssayExperiment")``::MultiAssayExperiment()`
+- Single cell data – `r Biocpkg("SingleCellExperiment")``::SingleCellExperiment()`
+- Mass spectrometry data – `r Biocpkg("MSnbase")``::MSnExp()` (see later)
+
+---
+class: middle, center
+
+## Quantitative data: `MSnSet` in `MSnbase`
+
+
+![MSnSet infrastructure](./Figures/msnset.png)
+
+???
+
+A common design theme that is found throughout many Bioconductor core
+classes is illustrated below, which is found in microarrays,
+quantiative proteomics data, RNA-Seq data, ... It contains a
+rectangular feature x sample data matrix and sample and
+feature-specific annotations.
+
+
+---
+class: middle
+
+## Class structures and hierarchy of mass spectrometry
+
+- Low level raw data: `mzRpwiz`, `mzRnetCDF`, `mzRident`, ... in `mzR`
+- High level raw data : `[OnDisk]MSnExp` in `MSnbase`
+
+```{r msnbase, eval=FALSE}
+library("MSnbase")
+library("msdata")
+basename(f <- msdata::proteomics(full.names = TRUE, pattern = "MS3"))
+readMSData(f, mode = "onDisk")
+```
+
+---
+class: middle, center, inverse
+
+## Applications (2)
+
+###  MS-based proteomics and metabolomics
+
+---
+class: middle
+
+![](./Figures/protmspkgsdep.png)
+
 
 ---
 class: inverse, middle, center
+count: false
+
+
 # Scientific software
 
 ---
 
 - Unit testing
-- Documentations
+- Documentations and reproducible research
 - The costs of maintenance
 
----
-class: inverse, middle, center
-# Over time
-
----
-
-- MSnbase (see later)
-- mzR
-- pRoloc
 
 ---
 class: inverse, middle, center
+count: false
+
 # `MSnbase` contributions
 
 ---
@@ -104,20 +381,24 @@ class: middle, center
 
 
 ---
-class: inverse, middle, center
-# Broder ecosystem
+class: middle
 
----
+## More information
 
-MS-based proteomics and metabolomics
+- The [Bioconductor](http://www.bioconductor.org) web site.
+- The `r BiocStyle::Biocexptpkg("RforProteomics")` package and
+  references therein.
+- The [Navigating the Bioconductor project]( https://lgatto.github.io/2017_11_09_Rcourse_Jena/) chapter of a recent course: vignettes, workflows, biocViews, ...
+
 
 ---
 class: middle
 name: laurent-gatto
 
+.left-col[
 <img src="./img/lgatto3b.png" width = "180px"/>
 ### Laurent Gatto
-<i class="fas fa-flask"></i>&nbsp;[Computational Proteomics Unit](https://lgatto.github.io/cpu-lab/) (CPU)<br />
+<i class="fas fa-flask"></i>&nbsp;[Computational Proteomics Unit](https://lgatto.github.io/cpu-lab/)<br />
 <i class="fas fa-map-marker-alt"></i>&nbsp;University of Cambridge<br />
 <i class="fas fa-envelope"></i>&nbsp;lg390@cam.ac.uk<br />
 <i class="fas fa-home"></i>&nbsp;https://lgatto.github.io<br />
@@ -129,13 +410,12 @@ name: laurent-gatto
 <img width="20px" align="top" alt="Impact story" src="./img/impactstory-logo.png"/>&nbsp;[Impact story](https://profiles.impactstory.org/u/0000-0002-1520-2268)<br />
 <i class="fas fa-pencil-alt"></i>&nbsp;[dissem.in](https://dissem.in/r/6231/laurent-gatto)<br />
 <!-- <i class="fab fa-linkedin"></i>&nbsp;https://www.linkedin.com/in/lgatto/<br /> -->
+]
 
+.rigth-col[
 
+## Thank you for your attention
 
----
-class: center, middle, inverse
-
-Thank you for your attention
-
-Find the slides [online](https://rawgit.com/lgatto/slide-templates/master/my_template.html).
+### Find the slides [online](https://rawgit.com/lgatto/slide-templates/master/my_template.html).
+]
 

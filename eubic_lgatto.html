@@ -54,46 +54,285 @@ ecosystem**.
 
 ---
 class: inverse, middle, center
+count: false
 
 # Bioconductor software
 
----
+???
 
 - What is available in Bioconductor
 - My packages
 - Software dependencies
 
+
+---
+class: middle 
+
+[Bioconductor](https://bioconductor.org/) (Release 3.6) provides tools
+for the analysis and comprehension of high-throughput genomic
+data. Bioconductor uses
+the [R statistical programming language](https://www.r-project.org/),
+and is open source and open development. It has two releases each
+year,
+[1476 software](https://bioconductor.org/packages/release/BiocViews.html#___Software) (908
+annotation and 325 experiment) packages, and an active user community.
+
+
+---
+class: middle 
+
+Open source, and **coordinated open development**, enabling
+**reproducible research** enables understanding of the data (not a
+black box) and **drive scientific innovation**.
+
+- Bioconductor core team (lead by Dr. Martin Morgan)
+- Common infrastructure
+- Common documentation standards
+- Common testing infrastructure
+- Open package technical peer review
+
+---
+class: middle 
+
+Since 2010 - 2011, there has been a considerable increase in the
+number and usage of mass spectrometry and proteomics software in
+Bioconductor (see the [Proteomics packages in
+Bioconductor](https://lgatto.github.io/RforProteomics/articles/biocprot.html)
+for details.)
+
+---
+class: middle, center
+
+![plot of chunk nbpkgs](figure/nbpkgs-1.png)
+
+???
+
+These are data for version 3.7, the current devel version.
+
+In 2011 and in the years thereafter, the Bioconductor project has
+accepted a growing number of proteomics packages. Since 2009, there
+were 14, 15, 22, 32, 52, 69, 82, 89, 97 and 96 packages, corresponding
+to 1, 7, 10, 20, 17, 13, 7, 8 and -1 new packages per year.
+
+---
+class: middle, center
+
+![plot of chunk nnbdown](figure/nnbdown-1.png)
+
+
+---
+class: middle, center
+
+![plot of chunk nbdownly](figure/nbdownly-1.png)
+
+???
+
+When looking at individual packages however, the trend seems to hold
+for most packages, which show a slight but consistent upwards trend.
+
+---
+class: middle, center
+
+
+| Year| Nb_of_distinct_IPs| Nb_of_downloads|package         |
+|----:|------------------:|---------------:|:---------------|
+| 2017|              23782|           42841|ProtGenerics    |
+| 2017|              15614|           34971|pathview        |
+| 2017|              11921|           32271|mzR             |
+| 2017|               8751|           21572|MSnbase         |
+| 2017|               8140|           15385|mzID            |
+| 2017|               6867|           12473|MassSpecWavelet |
+
+---
+class: middle, center
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png)
+
 ---
 class: inverse, middle, center
-# Data structures
+count: false
+
+# Use cases
+
+### Dependencies
+### Applications
+### Data structures
 
 ---
+class: middle, center
 
-- `[OnDisk]MSnExp`
-- `MSnSet`
+![](./Figures/g.png)
+
+
+???
+
+Dependency graph containing 41 MS and proteomics-tagged packages (out
+of 100+) and their dependencies. Showing all packages and deps would
+produce a big hairball.
+
+- Number of proteomics packages: 97
+- Number of mass spec packages: 66
+- 41 in common, coloured on the graph
+- 192 white nodes, non-MS/prot dependencies
+- My Bioc packages: 16, 8 on that graph
+
+
+- `mzR`: fast access to raw MS data in open formats
+- `MSnbase`: general infrastructure of MS and proteomics
+- `pRoloc`: spatial proteomics
+
+---
+class: middle, center
+
+![](./Figures/protmspkgsdep.png)
+
+???
+
+Explain what these different packages do.
+
+---
+class: middle, center, inverse
+
+## Applications (1)
+
+### Spatial proteomics
+
+---
+class: middle
+
+See *A Bioconductor workflow for processing and analysing spatial
+proteomics data*
+([doi:10.12688/f1000research.10411.1](https://f1000research.com/articles/5-2926/))
+for details.
+
+
+.left-col[
+
+```r
+library("pRoloc")
+library("pRolocdata")
+data(hyperLOPIT2015)
+plot2D(hyperLOPIT2015)
+```
+]
+
+.right-col[
+&lt;img src="./Figures/hl.png" /&gt;
+]
+
+
+
+---
+class: middle, center
+
+![](./Figures/protmspkgsdep.png)
+
+---
+class: middle, center, inverse
+
+## Data infrastructure
+
+---
+class: middle
+
+An essential aspect that is central to Bioconductor and its success is
+the availability of core data infrastructure that is used across
+packages. Package developers are advised to make use of existing
+infrastructure to provide coherence, interoperability and stability to
+the project as a whole.
+
+Below are some core classes, taken from the
+[Common Bioconductor Methods and Classes](https://bioconductor.org/developers/how-to/commonMethodsAndClasses/) page.
+
+---
+class: middle
+
+#### Importing
+
+- GTF, GFF, BED, BigWig, etc., - *[rtracklayer](http://bioconductor.org/packages/rtracklayer)*`::import()`
+- VCF – *[VariantAnnotation](http://bioconductor.org/packages/VariantAnnotation)*`::readVcf()`
+- SAM / BAM – *[Rsamtools](http://bioconductor.org/packages/Rsamtools)*`::scanBam()`, *[GenomicAlignments](http://bioconductor.org/packages/GenomicAlignments)*`:readGAlignment*()`
+- FASTA – *[Biostrings](http://bioconductor.org/packages/Biostrings)*`::readDNAStringSet()`
+- FASTQ – *[ShortRead](http://bioconductor.org/packages/ShortRead)*`::readFastq()`
+- Mass spectrometry data (XML-based and mfg formats) – *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::readMSData()`, *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::readMgfData()`
+
+---
+class: middle
+
+#### Common Classes
+
+- Rectangular feature x sample data – *[SummarizedExperiment](http://bioconductor.org/packages/SummarizedExperiment)*`::SummarizedExperiment()` (RNAseq count matrix, microarray, ...)
+- Genomic coordinates – *[GenomicRanges](http://bioconductor.org/packages/GenomicRanges)*`::GRanges()` (1-based, closed interval)
+- DNA / RNA / AA sequences – *[Biostrings](http://bioconductor.org/packages/Biostrings)*`::*StringSet()`
+- Gene sets – *[GSEABase](http://bioconductor.org/packages/GSEABase)*`::GeneSet()` *[GSEABase](http://bioconductor.org/packages/GSEABase)*`::GeneSetCollection()`
+- Multi-omics data – *[MultiAssayExperiment](http://bioconductor.org/packages/MultiAssayExperiment)*`::MultiAssayExperiment()`
+- Single cell data – *[SingleCellExperiment](http://bioconductor.org/packages/SingleCellExperiment)*`::SingleCellExperiment()`
+- Mass spectrometry data – *[MSnbase](http://bioconductor.org/packages/MSnbase)*`::MSnExp()` (see later)
+
+---
+class: middle, center
+
+## Quantitative data: `MSnSet` in `MSnbase`
+
+
+![MSnSet infrastructure](./Figures/msnset.png)
+
+???
+
+A common design theme that is found throughout many Bioconductor core
+classes is illustrated below, which is found in microarrays,
+quantiative proteomics data, RNA-Seq data, ... It contains a
+rectangular feature x sample data matrix and sample and
+feature-specific annotations.
+
+
+---
+class: middle
+
+## Class structures and hierarchy of mass spectrometry
+
+- Low level raw data: `mzRpwiz`, `mzRnetCDF`, `mzRident`, ... in `mzR`
+- High level raw data : `[OnDisk]MSnExp` in `MSnbase`
+
+
+```r
+library("MSnbase")
+library("msdata")
+basename(f &lt;- msdata::proteomics(full.names = TRUE, pattern = "MS3"))
+readMSData(f, mode = "onDisk")
+```
+
+---
+class: middle, center, inverse
+
+## Applications (2)
+
+###  MS-based proteomics and metabolomics
+
+---
+class: middle
+
+![](./Figures/protmspkgsdep.png)
+
 
 ---
 class: inverse, middle, center
+count: false
+
+
 # Scientific software
 
 ---
 
 - Unit testing
-- Documentations
+- Documentations and reproducible research
 - The costs of maintenance
 
----
-class: inverse, middle, center
-# Over time
-
----
-
-- MSnbase (see later)
-- mzR
-- pRoloc
 
 ---
 class: inverse, middle, center
+count: false
+
 # `MSnbase` contributions
 
 ---
@@ -110,20 +349,24 @@ class: middle, center
 
 
 ---
-class: inverse, middle, center
-# Broder ecosystem
+class: middle
 
----
+## More information
 
-MS-based proteomics and metabolomics
+- The [Bioconductor](http://www.bioconductor.org) web site.
+- The *[RforProteomics](http://bioconductor.org/packages/RforProteomics)* package and
+  references therein.
+- The [Navigating the Bioconductor project]( https://lgatto.github.io/2017_11_09_Rcourse_Jena/) chapter of a recent course: vignettes, workflows, biocViews, ...
+
 
 ---
 class: middle
 name: laurent-gatto
 
+.left-col[
 &lt;img src="./img/lgatto3b.png" width = "180px"/&gt;
 ### Laurent Gatto
-&lt;i class="fas fa-flask"&gt;&lt;/i&gt;&amp;nbsp;[Computational Proteomics Unit](https://lgatto.github.io/cpu-lab/) (CPU)&lt;br /&gt;
+&lt;i class="fas fa-flask"&gt;&lt;/i&gt;&amp;nbsp;[Computational Proteomics Unit](https://lgatto.github.io/cpu-lab/)&lt;br /&gt;
 &lt;i class="fas fa-map-marker-alt"&gt;&lt;/i&gt;&amp;nbsp;University of Cambridge&lt;br /&gt;
 &lt;i class="fas fa-envelope"&gt;&lt;/i&gt;&amp;nbsp;lg390@cam.ac.uk&lt;br /&gt;
 &lt;i class="fas fa-home"&gt;&lt;/i&gt;&amp;nbsp;https://lgatto.github.io&lt;br /&gt;
@@ -135,15 +378,14 @@ name: laurent-gatto
 &lt;img width="20px" align="top" alt="Impact story" src="./img/impactstory-logo.png"/&gt;&amp;nbsp;[Impact story](https://profiles.impactstory.org/u/0000-0002-1520-2268)&lt;br /&gt;
 &lt;i class="fas fa-pencil-alt"&gt;&lt;/i&gt;&amp;nbsp;[dissem.in](https://dissem.in/r/6231/laurent-gatto)&lt;br /&gt;
 &lt;!-- &lt;i class="fab fa-linkedin"&gt;&lt;/i&gt;&amp;nbsp;https://www.linkedin.com/in/lgatto/&lt;br /&gt; --&gt;
+]
 
+.rigth-col[
 
+## Thank you for your attention
 
----
-class: center, middle, inverse
-
-Thank you for your attention
-
-Find the slides [online](https://rawgit.com/lgatto/slide-templates/master/my_template.html).
+### Find the slides [online](https://rawgit.com/lgatto/slide-templates/master/my_template.html).
+]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
