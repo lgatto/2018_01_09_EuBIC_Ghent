@@ -18,7 +18,9 @@ how some of these software packages evolved over time, greatly
 benefited from external contributions, and how they fit into a broader
 software ecosystem.
 
-Slides are availble [here](https://rawgit.com/lgatto/2018_01_09_EuBIC_Ghent/master/eubic_lgatto.html).
+Slides are available [here](https://rawgit.com/lgatto/2018_01_09_EuBIC_Ghent/master/eubic_lgatto.html).
+
+![First slide](./Figures/screenshot.png)
 
 ### Licence
 
