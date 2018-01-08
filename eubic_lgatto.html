@@ -25,7 +25,7 @@ name: cc-by
 
 
 
-Get the slides at http://bit.ly/20180109eubic
+### Get the slides at http://bit.ly/20180109eubic
 
 These slides are available under a **creative common
 [CC-BY license](http://creativecommons.org/licenses/by/4.0/)**. You are
@@ -123,18 +123,10 @@ to 1, 7, 10, 20, 17, 13, 7, 8 and -1 new packages per year.
 ---
 class: middle, center
 
+### Downloads (distince IPs)
+
 ![plot of chunk nnbdown](figure/nnbdown-1.png)
 
-
----
-class: middle, center
-
-![plot of chunk nbdownly](figure/nbdownly-1.png)
-
-???
-
-When looking at individual packages however, the trend seems to hold
-for most packages, which show a slight but consistent upwards trend.
 
 ---
 class: middle, center
@@ -263,10 +255,10 @@ feature-specific annotations.
 ---
 class: middle
 
-## Class structures and hierarchy of mass spectrometry
+## Class structures and hierarchy 
 
-- Low level raw data: `mzRpwiz`, `mzRnetCDF`, `mzRident`, ... in `mzR`
-- High level raw data : `[OnDisk]MSnExp` in `MSnbase`
+- Low level raw data: `mzRpwiz`, `mzRnetCDF`, `mzRident`, ... in **`mzR`**
+- High level raw data : `[OnDisk]MSnExp` in **`MSnbase`** (relying on **`mzR`**)
 
 
 ```r
@@ -335,7 +327,7 @@ count: false
 
 ### Documentations
 ### Testing
-
+### Software decay
 
 ---
 
@@ -411,11 +403,12 @@ class: middle
 
 ## The costs of maintenance
 
-- Software decay
-- Side effect of dependencies
-- Testing helps to maintain working code
-- Sometimes, less is more
-- Deprecation vs. long term maintenace (and funding!)
+- Software decay.
+- Instability, a side effect of dependencies, especially online
+  resources (for example *[rols](http://bioconductor.org/packages/rols)* and *[rpx](http://bioconductor.org/packages/rpx)*).
+- Testing helps to maintain working code.
+- Sometimes, less is more.
+- [Deprecation](https://bioconductor.org/developers/package-end-of-life/) vs. long term maintenace (and funding!).
 
 ---
 class: middle, center
@@ -431,12 +424,12 @@ count: false
 ---
 class: middle, center
 
-![MSnbase contributions](./figure/msnbase-github-commits.png)
+&lt;a href="https://github.com/lgatto/MSnbase/graphs/contributors"&gt;&lt;img width="80%" src="./Figures/msnbase-github-commits.png" alt="MSnbase contributions"/&gt;&lt;/a&gt;
 
 ---
 class: middle, center
 
-![MSnbase contributions](./figure/msnbase-contribs.png)
+![MSnbase contributions](./Figures/msnbase-contribs.png)
 
 .left[See also [this blog post](https://lgatto.github.io/msnbase-contribs/).]
 
@@ -449,7 +442,9 @@ class: middle
 - The [Bioconductor](http://www.bioconductor.org) web site.
 - The *[RforProteomics](http://bioconductor.org/packages/RforProteomics)* package and
   references therein.
-- The [Navigating the Bioconductor project]( https://lgatto.github.io/2017_11_09_Rcourse_Jena/) chapter of a recent course: vignettes, workflows, biocViews, ...
+- The [Navigating the Bioconductor project]( https://lgatto.github.io/2017_11_09_Rcourse_Jena/) chapter
+  of a recent course: vignettes, workflows, biocViews, ...
+- [Teaching material](https://lgatto.github.io/TeachingMaterial/) and [here](https://rawgit.com/lgatto/bioc-ms-prot/master/lab.html).
 
 
 ---
@@ -494,7 +489,52 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
-})();</script>
+})();
+(function(time) {
+  var d2 = function(number) {
+    return ('0' + number).slice(-2); // left-pad 0 to minutes/seconds
+  },
+
+  time_format = function(total) {
+    var secs = Math.abs(total) / 1000;
+    var h = Math.floor(secs / 3600);
+    var m = Math.floor(secs % 3600 / 60);
+    var s = Math.round(secs % 60);
+    var res = d2(m) + ':' + d2(s);
+    if (h > 0) res = h + ':' + res;
+    return res;  // [hh:]mm:ss
+  },
+
+  slide_number_div = function(i) {
+    return document.getElementsByClassName('remark-slide-number').item(i);
+  },
+
+  current_page_number = function(i) {
+    return slide_number_div(i).firstChild.textContent;  // text "i / N"
+  };
+
+  var timer = document.createElement('span'); timer.id = 'slide-time-left';
+  var time_left = time, k = slideshow.getCurrentSlideIndex(),
+      last_page_number = current_page_number(k);
+
+  setInterval(function() {
+    time_left = time_left - 1000;
+    timer.innerHTML = ' ' + time_format(time_left);
+    if (time_left < 0) timer.style.color = 'red';
+  }, 1000);
+
+  slide_number_div(k).appendChild(timer);
+
+  slideshow.on('showSlide', function(slide) {
+    var i = slide.getSlideIndex(), n = current_page_number(i);
+    // reset timer when a new slide is shown and the page number is changed
+    if (last_page_number !== n) {
+      time_left = time; last_page_number = n;
+      timer.innerHTML = ' ' + time_format(time); timer.style.color = null;
+    }
+    slide_number_div(i).appendChild(timer);
+  });
+})(60000);</script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({

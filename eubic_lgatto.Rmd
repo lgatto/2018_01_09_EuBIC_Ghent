@@ -27,7 +27,7 @@ library("gridExtra")
 load("./data/downloads.rda")
 ```
 
-Get the slides at http://bit.ly/20180109eubic
+### Get the slides at http://bit.ly/20180109eubic
 
 These slides are available under a **creative common
 [CC-BY license](http://creativecommons.org/licenses/by/4.0/)**. You are
@@ -130,7 +130,9 @@ to 1, 7, 10, 20, 17, 13, 7, 8 and -1 new packages per year.
 ---
 class: middle, center
 
-```{r nnbdown, echo=FALSE}
+### Downloads (distince IPs)
+
+```{r nnbdown, echo=FALSE, fig.width=12}
 mzrsel <- pyearly$package == "mzR"
 pyearly[mzrsel & pyearly$Year == 2013, "Nb_of_distinct_IPs"] <- 5000
 pyearly[mzrsel & pyearly$Year == 2014, "Nb_of_distinct_IPs"] <- 7500
@@ -138,26 +140,15 @@ alldwn <- pyearly %>%
     filter(Year < as.numeric(format(Sys.time(),"%Y"))) %>%
     group_by(Year) %>%
     summarise(Downloads = sum(Nb_of_distinct_IPs))
-ggplot(alldwn, aes(x = Year, y = Downloads)) +
+p1 <- ggplot(alldwn, aes(x = Year, y = Downloads)) +
     geom_point() + geom_line() +
     ylab("Total number of downloads (distinct IPs)")    
-```
-
-
----
-class: middle, center
-
-```{r nbdownly, message=FALSE, echo=FALSE}
-ggplot(pyearly, aes(x = Date, y = Nb_of_distinct_IPs, group = package)) +
-    geom_point() + geom_line() +
+p2 <- ggplot(pyearly, aes(x = Date, y = Nb_of_distinct_IPs, group = package)) +
+    geom_point() + geom_line() + 
     ylab("Package downloads (distinct IPs)")
-    
+grid.arrange(p1, p2, ncol = 2)
 ```
 
-???
-
-When looking at individual packages however, the trend seems to hold
-for most packages, which show a slight but consistent upwards trend.
 
 ---
 class: middle, center
@@ -297,10 +288,10 @@ feature-specific annotations.
 ---
 class: middle
 
-## Class structures and hierarchy of mass spectrometry
+## Class structures and hierarchy 
 
-- Low level raw data: `mzRpwiz`, `mzRnetCDF`, `mzRident`, ... in `mzR`
-- High level raw data : `[OnDisk]MSnExp` in `MSnbase`
+- Low level raw data: `mzRpwiz`, `mzRnetCDF`, `mzRident`, ... in **`mzR`**
+- High level raw data : `[OnDisk]MSnExp` in **`MSnbase`** (relying on **`mzR`**)
 
 ```{r msnbase, eval=FALSE}
 library("MSnbase")
@@ -367,7 +358,7 @@ count: false
 
 ### Documentations
 ### Testing
-
+### Software decay
 
 ---
 
@@ -442,11 +433,12 @@ class: middle
 
 ## The costs of maintenance
 
-- Software decay
-- Side effect of dependencies
-- Testing helps to maintain working code
-- Sometimes, less is more
-- Deprecation vs. long term maintenace (and funding!)
+- Software decay.
+- Instability, a side effect of dependencies, especially online
+  resources (for example `r Biocpkg("rols")` and `r Biocpkg("rpx")`).
+- Testing helps to maintain working code.
+- Sometimes, less is more.
+- [Deprecation](https://bioconductor.org/developers/package-end-of-life/) vs. long term maintenace (and funding!).
 
 ---
 class: middle, center
@@ -462,12 +454,12 @@ count: false
 ---
 class: middle, center
 
-![MSnbase contributions](./figure/msnbase-github-commits.png)
+<a href="https://github.com/lgatto/MSnbase/graphs/contributors"><img width="80%" src="./Figures/msnbase-github-commits.png" alt="MSnbase contributions"/></a>
 
 ---
 class: middle, center
 
-![MSnbase contributions](./figure/msnbase-contribs.png)
+![MSnbase contributions](./Figures/msnbase-contribs.png)
 
 .left[See also [this blog post](https://lgatto.github.io/msnbase-contribs/).]
 
@@ -480,7 +472,9 @@ class: middle
 - The [Bioconductor](http://www.bioconductor.org) web site.
 - The `r BiocStyle::Biocexptpkg("RforProteomics")` package and
   references therein.
-- The [Navigating the Bioconductor project]( https://lgatto.github.io/2017_11_09_Rcourse_Jena/) chapter of a recent course: vignettes, workflows, biocViews, ...
+- The [Navigating the Bioconductor project]( https://lgatto.github.io/2017_11_09_Rcourse_Jena/) chapter
+  of a recent course: vignettes, workflows, biocViews, ...
+- [Teaching material](https://lgatto.github.io/TeachingMaterial/) and [here](https://rawgit.com/lgatto/bioc-ms-prot/master/lab.html).
 
 
 ---
