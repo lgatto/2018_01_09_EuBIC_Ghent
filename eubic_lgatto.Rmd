@@ -2,7 +2,7 @@
 title: "Open source and open development proteomics software"
 subtitle: "In the R/Bioconductor ecosystem"
 author: "[Laurent Gatto](#laurent-gatto)"
-date: "9 January 2018"
+date: "9 January 2018, [EuBIC18](http://uahost.uantwerpen.be/eubic18/)"
 output:
   xaringan::moon_reader:
     css: ["default", "default-fonts", "font-awesome.css"]
