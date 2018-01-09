@@ -367,7 +367,7 @@ class: middle
 - Common fast and on-disk infrastructure for proteomics and
   metabolomics
 - Better support for chromatograms in `MSnbase` and `xcms`
-- And whilw `xcms` and `pRolocdata` are miles away in terms of
+- And while `xcms` and `pRolocdata` are miles away in terms of
   audience, users, applications, from a software development
   perspective, they have grown a shared root infrastructure.
 
