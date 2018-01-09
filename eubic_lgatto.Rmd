@@ -64,8 +64,8 @@ count: false
 
 ???
 
-- What is available in Bioconductor? 
-- Lead to how does the mass spectrometry and proteomics work I am
+- What is Bioconductor? What is available in Bioconductor?
+- Leads to how does the mass spectrometry and proteomics work I am
   involved in fits in the wider project.
 - Because open source and open development isn't done in glorious
   isolation, or at least that isn't when openness shines.
