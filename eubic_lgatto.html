@@ -63,21 +63,22 @@ count: false
 ???
 
 - What is Bioconductor? What is available in Bioconductor?
-- Leads to how does the mass spectrometry and proteomics work I am
-  involved in fits in the wider project.
-- Because open source and open development isn't done in glorious
-  isolation, or at least that isn't when openness shines.
+- How does the mass spectrometry and proteomics work I am involved in
+  fits in the wider project.
+- Because open source and open development shoudn't be done in
+  glorious isolation, or at least that isn't when openness shines.
 
 
 ---
 class: middle 
 
-[Bioconductor](https://bioconductor.org/) (Release 3.6) provides tools
-for the analysis and comprehension of high-throughput genomic
+[Bioconductor](https://bioconductor.org/) provides tools for the
+analysis and comprehension of high-throughput genomic
 data. Bioconductor uses
 the [R statistical programming language](https://www.r-project.org/),
-and is **open source** and **open development**. It has two releases
-each year,
+and is **open source** and **open development**.  Currently, in
+release 3.6, there
+are
 [1476 software](https://bioconductor.org/packages/release/BiocViews.html#___Software) (908
 annotation and 325 experiment) packages, and an active user community.
 
@@ -92,6 +93,7 @@ black box) and **drive scientific innovation**.
 - Common documentation standards
 - Common testing infrastructure
 - Open package technical peer review
+  ([publicly, on GitHub](https://github.com/Bioconductor/Contributions))
 
 ???
 
@@ -117,9 +119,11 @@ class: middle, center
 
 ???
 
-Coincidently, Mike Love, the main developer of `DESeq2` posted this on
-twitter last night, and I was very happy that he was inclusive of
-proteomics.
+Coincidently, Mike Love, the main developer
+of
+[`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) posted
+this on twitter last night, and I was very happy that he was inclusive
+of proteomics.
 
 ---
 class: middle, center
@@ -216,14 +220,21 @@ class: middle
 
 ## Data infrastructure
 
-An essential aspect to Bioconductor and its success is the
-availability of core data infrastructure that is used across
-packages. Package developers are advised to make use of existing
+The availability of core data infrastructure that is used across
+packages is an essential aspect to Bioconductor and its
+success. Package developers are advised to make use of existing
 infrastructure to provide coherence, interoperability and stability to
 the project as a whole.
 
 Below are some core classes, taken from the
 [Common Bioconductor Methods and Classes](https://bioconductor.org/developers/how-to/commonMethodsAndClasses/) page.
+
+???
+
+- Common data infrastructure limits to re-invent the wheel over and
+  over again.
+- Allows users to easily learn and use new software, as same
+  structures and **concepts** are applied in different places.
 
 ---
 class: middle
@@ -315,10 +326,17 @@ plot2D(hyperLOPIT2015)
 &lt;img src="./Figures/hl.png" /&gt;
 ]
 
+
 ---
 class: middle, center
 
 ![](./Figures/protmspkgsdep.png)
+
+???
+
+The availability of **stable data structures**, **test data** spanning
+over a decade, **good visualisation**, and **user input**, has enabled
+new developments, new algorithms: **scientific innovation**.
 
 ---
 class: middle, center, inverse
@@ -338,9 +356,11 @@ class: middle
 - Common fast and on-disk infrastructure for proteomics and
   metabolomics
 - Better support for chromatograms in `MSnbase` and `xcms`
-- And while `xcms` and `pRolocdata` are miles away in terms of
-  audience, users, applications, from a software development
-  perspective, they have grown a shared root infrastructure.
+
+
+And while `xcms` and `pRolocdata` are miles away in terms of audience,
+users, applications, from a software development perspective, they
+have grown a shared root infrastructure.
 
 ---
 class: inverse, middle, center
